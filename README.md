@@ -18,6 +18,7 @@
    cd semphen
    python python/download_data.py -d path/to/data/download/directory
 ```
+- TO DO: Add poetry install instructions and .toml file... pip install might be nice as well (pypi)
 
 # Running the algorithm example commands
 - Running on multiple phenopackets (-m can be gene or disease)
