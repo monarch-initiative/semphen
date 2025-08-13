@@ -30,6 +30,7 @@ def divide_workload(data_list, num_proc: int=1) -> list:
     If num_proc == 1 then the original input list will be returned nested in a top layer list i.e. [data_list]
     """
 
+    parser.add_argument("-s", "--similarity", help="Similarity metric to be used (e.g., 'phenodigm', 'ancestor_information_content')", required=False, type=str, default='phenodigm', choices=['phenodigm', 'ancestor_information_content'])
     # Deal with our edge case at the very begginning which then is used as input into the second potential edge case
     ndata_elements = len(data_list)
     if ndata_elements < num_proc:
@@ -377,7 +378,7 @@ def get_phenotype_associations(semsim, phenotype_ids, outfile, symbol_map, name_
 
                                             search_type="full",
                                             #score_metric="ancestor_information_content",
-                                            score_metric="phenodigm",
+                                            score_metric=args.similarity,
                                             limit=10000,
                                             direction="object_to_subject")
 
