@@ -57,4 +57,5 @@
   ```
 
 - Similarity metrics
-  - Use `-s phenodigm` (default) or `-s ancestor_information_content` to choose the Semsimian score metric.
+  - Use `-s <metric>` to choose the Semsimian score metric. Examples: `phenodigm` (default), `ancestor_information_content`.
+  - If an unsupported metric is provided, the program raises a clear error from Semsimian.

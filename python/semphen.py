@@ -369,17 +369,18 @@ def get_phenotype_associations(semsim, phenotype_ids, outfile, symbol_map, name_
         phenotype_ids = set(phenotype_ids)
 
     # Perform search (results are sorted in order of best ranking to worst ranking)
-    results =  semsim.associations_search(object_closure_predicate_terms={"biolink:has_phenotype"},
-                                            object_terms=phenotype_ids, # Must be set
-                                            include_similarity_object=False,
-                                            subject_terms=None,
-                                            subject_prefixes=[subject_prefix],
-
-                                            search_type="full",
-                                            #score_metric="ancestor_information_content",
-                                            score_metric=args.similarity,
-                                            limit=10000,
-                                            direction="object_to_subject")
+    try:
+        results =  semsim.associations_search(object_closure_predicate_terms={"biolink:has_phenotype"},
+                                              object_terms=phenotype_ids,  # Must be set
+                                              include_similarity_object=False,
+                                              subject_terms=None,
+                                              subject_prefixes=[subject_prefix],
+                                              search_type="full",
+                                              score_metric=args.similarity,
+                                              limit=10000,
+                                              direction="object_to_subject")
+    except Exception as e:
+        raise ValueError(f"Invalid or unsupported similarity metric '{args.similarity}'. Please provide a Semsimian-supported metric. Original error: {e}")
 
     ###results = [[0,0,"A"], [1,1,"B"], [2,2,"C"]] Testing purposes
 
@@ -451,7 +452,7 @@ if __name__ == '__main__':
         parser.add_argument("-o", "--out_arg", help="Path to output directory in case of multiple samples. Or path to output filename for single sample. Output directory will be created if doesn't exist already.", required=True, type=str, default=None)
         parser.add_argument("-d", "--data_dir", help="Directory containing necessary data files for semphen to run", required=True, type=str)
         parser.add_argument("-m", "--mode", help="Prioritization mode... disease or gene are allowed", required=True, choices=["disease", "gene"], type=str)
-        parser.add_argument("-s", "--similarity", help="Similarity metric to use", required=False, type=str, default='phenodigm', choices=['phenodigm', 'ancestor_information_content'])
+        parser.add_argument("-s", "--similarity", help="Similarity metric to use (any Semsimian-supported name, e.g., 'phenodigm', 'ancestor_information_content')", required=False, type=str, default='phenodigm')
         parser.add_argument("-c", "--num_proc", help="Number of cores to use for parallel processing", required=False, type=int, default=1)
         return parser.parse_args()
     
