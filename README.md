@@ -26,7 +26,8 @@
      python python/semphen.py -i path/to/json/phenopackets \
                               -o path/to/output/directory \
                               -d path/to/data/download/directory \
-                              -m gene
+                              -m gene \
+                              -s phenodigm
   ```
   
 - Additionally, the -c argument can be used to parallel process multiple phenopackets at once. To use 10 cores, use -c 10
@@ -35,6 +36,7 @@
                               -o path/to/output/directory \
                               -d path/to/data/download/directory \
                               -m disease \
+                              -s ancestor_information_content \
                               -c 10
   ```
 - Running on a single input phenopacket
@@ -42,12 +44,17 @@
      python python/semphen.py -i path/to/input/phenopacket.json \
                               -o path/to/output/file.tsv \
                               -d path/to/data/download/directory \
-                              -m gene
+                              -m gene \
+                              -s phenodigm
   ```
 - Running with HPO terms directly instead of pulling from phenopacket(s)
   ```bash
      python python/semphen.py -i HP:3000043,HP:0500017 \
                               -o path/to/output/file.tsv \
                               -d path/to/data/download/directory \
-                              -m disease
+                              -m disease \
+                              -s phenodigm
   ```
+
+- Similarity metrics
+  - Use `-s phenodigm` (default) or `-s ancestor_information_content` to choose the Semsimian score metric.

@@ -30,7 +30,6 @@ def divide_workload(data_list, num_proc: int=1) -> list:
     If num_proc == 1 then the original input list will be returned nested in a top layer list i.e. [data_list]
     """
 
-    parser.add_argument("-s", "--similarity", help="Similarity metric to be used (e.g., 'phenodigm', 'ancestor_information_content')", required=False, type=str, default='phenodigm', choices=['phenodigm', 'ancestor_information_content'])
     # Deal with our edge case at the very begginning which then is used as input into the second potential edge case
     ndata_elements = len(data_list)
     if ndata_elements < num_proc:
@@ -452,6 +451,7 @@ if __name__ == '__main__':
         parser.add_argument("-o", "--out_arg", help="Path to output directory in case of multiple samples. Or path to output filename for single sample. Output directory will be created if doesn't exist already.", required=True, type=str, default=None)
         parser.add_argument("-d", "--data_dir", help="Directory containing necessary data files for semphen to run", required=True, type=str)
         parser.add_argument("-m", "--mode", help="Prioritization mode... disease or gene are allowed", required=True, choices=["disease", "gene"], type=str)
+        parser.add_argument("-s", "--similarity", help="Similarity metric to use", required=False, type=str, default='phenodigm', choices=['phenodigm', 'ancestor_information_content'])
         parser.add_argument("-c", "--num_proc", help="Number of cores to use for parallel processing", required=False, type=int, default=1)
         return parser.parse_args()
     
